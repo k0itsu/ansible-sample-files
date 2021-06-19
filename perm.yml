@@ -1,1 +1,7 @@
-
+---
+- hosts: web1
+  tasks:
+    - name: Create an empty file with non-default permissions
+      file:
+        path: /opt/data/perm.txt
+        mode: '0640'
