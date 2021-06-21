@@ -1,0 +1,15 @@
+---
+- name: Extract data.tar.gz on web1
+  hosts: web1
+  tasks:
+    - unarchive:
+        src: /root/data.tar.gz
+        dest: /srv
+        remote_src: yes
+
+- name: Delete data.tar.gz on web1
+  hosts: web1
+  tasks:
+    - file:
+        path: /root/data.tar.gz
+        state: absent
