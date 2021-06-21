@@ -1,0 +1,1 @@
+web1 ansible_host=<ip_address> ansible_ssh_pass=<password> ansible-user=<username>
