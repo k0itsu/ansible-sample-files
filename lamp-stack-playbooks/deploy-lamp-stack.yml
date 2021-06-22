@@ -9,3 +9,38 @@
           - libsemanage-python
           - firewalld
         state: installed
+
+- name: Configure lamp-db
+  hosts: lamp-db
+  become: yes
+  tasks:
+    - name: Install packages
+      yum:
+        name: 
+          - mariadb-server
+          - MySQL-python
+    
+    - name: Copy MySQL config file
+      copy:
+        src: files/my.cnf
+        dest: /etc/my.cnf
+        
+    - name: Start mariadb service
+      service:
+        name: mariadb
+        state: started
+        enabled: yes
+        
+    - name: Start firewalld service
+      service:
+        name: firewalld
+        state: started
+        enabled: yes
+        
+    - name: Insert firewalld rule
+      firewalld:
+        port: 3306/tcp
+        zone: public
+        permanent: yes
+        immediate: yes
+        state: enabled
