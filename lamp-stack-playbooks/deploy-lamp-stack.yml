@@ -66,3 +66,42 @@
         
     - name: Load Inventory Data from db script
       shell: "mysql -f < /tmp/db-load-script.sql"
+
+- name: Install web service on lamp-web
+  hosts: lamp-web
+  become: yes
+  tasks:
+    - name: Install Web Server packages
+      yum:
+        name:
+          - httpd
+          - php
+          - php-mysql
+          - git
+        state: installed
+    
+    - name: Start firewalld service
+      service:
+        name: firewalld
+        state: started
+        enabled: yes
+        
+    - name: Insert firewalld rule for httpd
+      firewalld:
+        port: "{{ httpd_port }}/tcp"
+        zone: public
+        permanent: yes
+        immediate: yes
+        state: enabled
+        
+    - name: Set index.php as the default page
+      replace:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: "DirectoryIndex index.html"
+        replace: "DirectoryIndex index.php"
+
+    - name: Start httpd service
+      service:
+        name: httpd
+        state: started
+        enabled: yes
