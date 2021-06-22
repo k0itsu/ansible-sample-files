@@ -105,3 +105,13 @@
         name: httpd
         state: started
         enabled: yes
+        
+    - name: Clone the repo
+      git:
+        repo: "{{ repository }}"
+        dest: /var/www/html/
+        
+    - name: Copy custom index.php
+      copy:
+        src: files/index.php
+        dest: /var/www/html/index.php
