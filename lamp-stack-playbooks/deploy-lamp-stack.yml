@@ -45,3 +45,24 @@
         permanent: yes
         immediate: yes
         state: enabled
+
+    - name: Create Application Database
+      mysql_db:
+        name: "{{ dbname }}"
+        state: present
+        
+    - name: Create Application Database User
+      mysql_user:
+        name: "{{ dbuser }}"
+        password: "{{ dbpassword }}"
+        host: 172.20.1.100
+        priv: "*.*:ALL"
+        state: present
+        
+    - name: Copy db Script
+      copy:
+        src: files/db-load-script.sql
+        dest: /tmp
+        
+    - name: Load Inventory Data from db script
+      shell: "mysql -f < /tmp/db-load-script.sql"
