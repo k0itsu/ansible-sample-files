@@ -19,6 +19,7 @@
         name: 
           - mariadb-server
           - MySQL-python
+        state: installed
     
     - name: Copy MySQL config file
       copy:
