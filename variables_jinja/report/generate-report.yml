@@ -1,1 +1,10 @@
-
+---
+- hosts: all
+  tasks:
+    - setup:
+    
+- hosts: reporting_server
+  tasks:
+    - template:
+        src: templates/report.csv.j2
+        dest: /tmp/report.csv
