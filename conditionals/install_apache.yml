@@ -1,0 +1,15 @@
+---
+- name: Install apache
+  hosts: all
+  gather_facts: True
+  tasks:
+    - name: Install apache2 when Ubuntu
+      package:
+        name: apache2
+        state: present
+      when: ansible_distribution == "Ubuntu"
+    - name: Install httpd when CentOS
+      package:
+        name: httpd
+        state: present
+      when: ansible_distribution == "CentOS"
