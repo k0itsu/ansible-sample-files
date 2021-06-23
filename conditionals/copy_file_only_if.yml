@@ -9,3 +9,6 @@
         src: report_status.sh
         dest: "{{remote_dest}}"
       when: copy_file_only_if is defined and copy_file_only_if|bool
+
+# copy_file_only_if=true is passed in as command line argument
+# ansible-playbook copy_file_only_if.yml -e copy_file_only_if=true -i inventory -v
